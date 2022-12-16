@@ -10,9 +10,11 @@ interface IProps {
 
 export default function Popup({ popupVisible, setPopupVisible, children }: IProps) {
   const [innerAnim, setInnerAnim] = useState(false);
-
+  const outerRef = React.useRef(null);
+  const innerRef = React.useRef(null);
   return (
     <CSSTransition
+      nodeRef={outerRef}
       in={popupVisible}
       timeout={500}
       mountOnEnter
@@ -22,6 +24,7 @@ export default function Popup({ popupVisible, setPopupVisible, children }: IProp
       onExited={() => setInnerAnim(false)}
     >
       <div
+        ref={outerRef}
         className="overlay"
         onClick={() => {
           setInnerAnim(false);
@@ -29,13 +32,14 @@ export default function Popup({ popupVisible, setPopupVisible, children }: IProp
         }}
       >
         <CSSTransition
+          nodeRef={innerRef}
           in={innerAnim}
           timeout={400}
           mountOnEnter
           unmountOnExit
           classNames="inner-animation"
         >
-          <div className="popup" onClick={(e) => e.stopPropagation()}>
+          <div ref={innerRef} className="popup" onClick={(e) => e.stopPropagation()}>
             {children}
           </div>
         </CSSTransition>
