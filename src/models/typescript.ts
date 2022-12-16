@@ -1,4 +1,4 @@
-export interface ITradeData {
+export interface IParticipants {
   name: string;
   qualityActivities: string;
   productionTime: string;
@@ -8,4 +8,9 @@ export interface ITradeData {
   actions: string;
   id: number;
   isOnline: boolean;
+}
+
+export interface ITradeData {
+  participants: IParticipants[];
+  startTradeTime: number;
 }

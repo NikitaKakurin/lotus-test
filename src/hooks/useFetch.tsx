@@ -2,7 +2,7 @@ import { TradeData } from 'data/data';
 import { ITradeData } from 'models/typescript';
 import { useState, useEffect } from 'react';
 
-const initialData: ITradeData[] = [];
+const initialData: ITradeData = { participants: [], startTradeTime: 0 };
 export const useFetch = (url: string) => {
   const [data, setData] = useState(initialData);
   const [isError, setIsError] = useState(false);
