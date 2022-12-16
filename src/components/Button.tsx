@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react';
 
-type colorType = 'default' | 'alternative' | 'light' | 'green' | 'red';
+type colorType = 'default' | 'alternative' | 'light' | 'green' | 'red' | 'whiteRed' | 'gray';
 
 interface IButtonProps {
   children?: ReactNode;
@@ -25,6 +25,9 @@ const Button: FC<IButtonProps> = ({
 }) => {
   const colors: Colors = {
     default: 'bg-blue-500 text-white hover:bg-blue-700 focus:ring-blue-300',
+    gray: 'border border-gray-200 bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-300',
+    whiteRed:
+      'border border-red-300 bg-gray-100 text-gray-900 hover:bg-gray-200 focus:ring-gray-200',
     alternative:
       'border border-gray-200 bg-white text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-gray-200',
     light: 'border border-gray-300 bg-white text-gray-900 hover:bg-gray-100 focus:ring-gray-200',
@@ -39,7 +42,7 @@ const Button: FC<IButtonProps> = ({
           ? customClasses
           : `mx-${
               margin ? margin : '0'
-            } rounded-lg px-4 py-2 text-sm font-medium focus:outline-none focus:ring-4 ${
+            } rounded-xs px-2 py-2 text-sm font-medium focus:outline-none focus:ring-4 ${
               colors[color]
             } `
       }
