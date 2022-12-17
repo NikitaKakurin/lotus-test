@@ -37,7 +37,7 @@ export default function TradeRoom() {
   }, [startTradeTime, participants]);
 
   return (
-    <div className="min-h-[95vh] w-[96vw] overflow-y-auto rounded-lg bg-slate-50 p-5">
+    <div className="h-[95vh] w-[96vw] overflow-y-auto rounded-lg bg-slate-50 p-5">
       <Spinner isLoading={isLoading} />
       <h2 className="mb-4 w-full border-b-2 border-gray-400/70 pb-5 text-xl text-red-400">
         Ход торгов <span className="text-xl font-medium text-red-500">{title}</span>
@@ -128,7 +128,7 @@ export default function TradeRoom() {
                 ))}
               </tr>
               <tr>
-                <th className="p-2 text-left font-normal">Действия</th>
+                <th className="min-h-[20px] p-2 text-left font-normal">Действия</th>
                 {participants.map((item) => (
                   <td key={item.id}>
                     <p>{item.actions}</p>
@@ -139,7 +139,7 @@ export default function TradeRoom() {
           </table>
         </div>
       )}
-      <div className="flex flex-wrap justify-end gap-2 pt-3">
+      <div className="flex flex-wrap justify-center gap-2 pt-3 sm:justify-end">
         <Button color="green">
           <div className="flex flex-nowrap items-center justify-between gap-1">
             <span>ЧАТ</span>
