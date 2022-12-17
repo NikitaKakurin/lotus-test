@@ -2,16 +2,19 @@ import { useFetch } from 'hooks/useFetch';
 import React, { useEffect, useState } from 'react';
 import { fixCost } from 'utils/fixCost';
 import Spinner from './spinner/Spinner';
-import { BsChatLeftText } from 'react-icons/bs';
+import { BsChatLeftText, BsPersonCircle } from 'react-icons/bs';
 import { RxUpdate } from 'react-icons/rx';
 import { FaHammer } from 'react-icons/fa';
 import { HiOutlineNewspaper } from 'react-icons/hi';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import Button from './Button';
+import { timerLength } from 'constants/timer';
+import { fixTimer } from 'utils/fixTimer';
+import { GiSandsOfTime } from 'react-icons/gi';
 
 export default function TradeRoom() {
   const title = 'Тестовые торги на аппарат ЛОТОС №2033564 (09.11.2020 07:00)';
-  const [timerTime, setTimerTime] = useState(120);
+  const [timerTime, setTimerTime] = useState(timerLength);
   const [currentPlayerIndex, setCurrentPlayer] = useState(0);
   const { isError, isLoading, data } = useFetch('some url');
   const { startTradeTime, participants } = data;
@@ -22,8 +25,8 @@ export default function TradeRoom() {
     function timer() {
       const currentTime = Date.now();
       const diffTimeSS = Math.floor((currentTime - startTradeTime) / 1000);
-      const currentPlayer = Math.floor(diffTimeSS / 120) % participants.length;
-      const currentTimerTime = diffTimeSS % 120;
+      const currentPlayer = Math.floor(diffTimeSS / timerLength) % participants.length;
+      const currentTimerTime = diffTimeSS % timerLength;
       console.log(currentTimerTime);
       setTimerTime(currentTimerTime);
       setCurrentPlayer(currentPlayer);
@@ -34,7 +37,7 @@ export default function TradeRoom() {
   }, [startTradeTime, participants]);
 
   return (
-    <div className="h-[95vh] w-[96vw] rounded-lg bg-slate-50 p-5">
+    <div className="min-h-[95vh] w-[96vw] overflow-y-auto rounded-lg bg-slate-50 p-5">
       <Spinner isLoading={isLoading} />
       <h2 className="mb-4 w-full border-b-2 border-gray-400/70 pb-5 text-xl text-red-400">
         Ход торгов <span className="text-xl font-medium text-red-500">{title}</span>
@@ -47,15 +50,18 @@ export default function TradeRoom() {
         <h2 className="text-lg font-semibold text-red-500">Error Message</h2>
       ) : (
         <div className="mt-8 h-[70%] overflow-auto">
-          <table className="text-center text-sm [&>*:nth-child(odd)]:bg-gray-200/50 [&>*:nth-child(1)]:bg-transparent">
-            <tbody>
+          <table className="text-center text-sm">
+            <tbody className="[&>*:nth-child(odd)]:bg-gray-200/50 [&>*:nth-child(1)]:bg-transparent">
               <tr className="h-[100px]">
                 <th className="min-w-[400px] font-normal uppercase text-cyan-500">ХОД</th>
                 {participants.map((item, index) => (
                   <td key={item.id}>
                     {currentPlayerIndex === index && (
-                      <div className="flex h-[50px] items-center justify-center bg-orange-300">
-                        {timerTime}
+                      <div className="relative flex h-[50px] items-center justify-center rounded-sm bg-red-200">
+                        <span>{fixTimer(timerTime)}</span>
+                        <span className="absolute top-[16px] right-[14px]">
+                          <GiSandsOfTime size="18px" />
+                        </span>
                       </div>
                     )}
                   </td>
@@ -68,7 +74,10 @@ export default function TradeRoom() {
                 {participants.map((item, index) => (
                   <td key={item.id} className="min-w-[300px] font-normal uppercase text-cyan-500">
                     <p>{`УЧАСТНИК №${index + 1}`}</p>
-                    <p className="font-medium">{item.name}</p>
+                    <p className="flex items-center justify-center gap-2 font-medium">
+                      {item.isOnline && <BsPersonCircle color="rgb(34 197 94)" />}
+                      {item.name}
+                    </p>
                   </td>
                 ))}
               </tr>
