@@ -9,7 +9,7 @@ function App() {
     <div className="min-h-screen bg-slate-100">
       <Button onClick={() => setShowRoom(true)}>open room</Button>
       <Popup popupVisible={isShowRoom} setPopupVisible={setShowRoom}>
-        <TradeRoom></TradeRoom>
+        <TradeRoom setPopupVisible={setShowRoom}></TradeRoom>
       </Popup>
     </div>
   );

@@ -12,7 +12,11 @@ import { timerLength } from 'constants/timer';
 import { fixTimer } from 'utils/fixTimer';
 import { GiSandsOfTime } from 'react-icons/gi';
 
-export default function TradeRoom() {
+interface IProps {
+  setPopupVisible: (arg: boolean) => void;
+}
+
+export default function TradeRoom({ setPopupVisible }: IProps) {
   const title = 'Тестовые торги на аппарат ЛОТОС №2033564 (09.11.2020 07:00)';
   const [timerTime, setTimerTime] = useState(timerLength);
   const [currentPlayerIndex, setCurrentPlayer] = useState(0);
@@ -164,7 +168,7 @@ export default function TradeRoom() {
             <HiOutlineNewspaper color="red" />
           </div>
         </Button>
-        <Button color="gray">
+        <Button onClick={() => setPopupVisible(false)} color="gray">
           <div className="flex flex-nowrap items-center justify-between gap-1">
             <span>ЗAКРЫТЬ</span>
             <AiOutlineCloseCircle />
