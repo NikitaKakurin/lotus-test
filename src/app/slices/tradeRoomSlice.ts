@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ITradeData } from 'models/typescript';
 import { fetchGetTradeRoom } from 'app/services/fetchGetTradeRoom';
-export interface CounterState {
+export interface tradeRoomState {
   data: ITradeData;
   isLoading: boolean;
   isError: boolean;
 }
 
-const initialState: CounterState = {
+const initialState: tradeRoomState = {
   data: {
+    title: '',
     participants: [],
     startTradeTime: 0,
   },

@@ -11,6 +11,7 @@ export interface IParticipants {
 }
 
 export interface ITradeData {
+  title: string;
   participants: IParticipants[];
   startTradeTime: number;
 }
