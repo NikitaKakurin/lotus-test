@@ -12,9 +12,7 @@ export default function TradeTable() {
   const [timerTime, setTimerTime] = useState(timerLength);
   const [currentPlayerIndex, setCurrentPlayer] = useState(0);
   const { data } = useAppSelector((state) => state.tradeRoom);
-  const { startTradeTime, participants } = data;
-  const minDiscount = 25000;
-  const wantedCost = 2475000;
+  const { startTradeTime, participants, minDiscount, wantedCost } = data;
 
   useEffect(() => {
     dispatch(getTradeRoomAsync());

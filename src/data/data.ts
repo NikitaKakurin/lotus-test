@@ -1,6 +1,8 @@
 export const tradeData = {
   startTradeTime: Date.parse(new Date().toDateString()),
   title: 'Тестовые торги на аппарат ЛОТОС №2033564 (09.11.2020 07:00)',
+  minDiscount: 25000,
+  wantedCost: 2475000,
   participants: [
     {
       name: 'Company1',

@@ -9,6 +9,8 @@ export interface tradeRoomState {
 
 const initialState: tradeRoomState = {
   data: {
+    minDiscount: 0,
+    wantedCost: 0,
     title: '',
     participants: [],
     startTradeTime: 0,
