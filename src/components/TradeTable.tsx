@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { fixCost } from 'utils/fixCost';
 import { BsPersonCircle } from 'react-icons/bs';
 import { timerLength } from 'constants/timer';
-import { fixTimer } from 'utils/fixTimer';
-import { GiSandsOfTime } from 'react-icons/gi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getTradeRoomAsync } from 'app/slices/tradeRoomSlice';
+import Timer from './timer/Timer';
+import { fixTimer } from 'utils/fixTimer';
 
 export default function TradeTable() {
   const dispatch = useAppDispatch();
@@ -39,14 +39,7 @@ export default function TradeTable() {
           <th className="min-w-[400px] font-normal uppercase text-cyan-500">ХОД</th>
           {participants.map((item, index) => (
             <td key={item.id}>
-              {currentPlayerIndex === index && (
-                <div className="relative flex h-[50px] items-center justify-center rounded-sm bg-red-200">
-                  <span>{fixTimer(timerTime)}</span>
-                  <span className="absolute top-[16px] right-[14px]">
-                    <GiSandsOfTime size="18px" />
-                  </span>
-                </div>
-              )}
+              <Timer isShowTimer={index === currentPlayerIndex}>{fixTimer(timerTime)}</Timer>
             </td>
           ))}
         </tr>
