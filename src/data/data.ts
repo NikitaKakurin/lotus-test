@@ -1,4 +1,4 @@
-export const TradeData = {
+export const tradeData = {
   startTradeTime: Date.parse(new Date().toDateString()),
   participants: [
     {

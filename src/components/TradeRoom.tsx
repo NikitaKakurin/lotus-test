@@ -1,5 +1,4 @@
-import { useFetch } from 'hooks/useFetch';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fixCost } from 'utils/fixCost';
 import Spinner from './spinner/Spinner';
 import { BsChatLeftText, BsPersonCircle } from 'react-icons/bs';
@@ -11,19 +10,25 @@ import Button from './Button';
 import { timerLength } from 'constants/timer';
 import { fixTimer } from 'utils/fixTimer';
 import { GiSandsOfTime } from 'react-icons/gi';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { getTradeRoomAsync } from 'app/slices/tradeRoomSlice';
 
 interface IProps {
   setPopupVisible: (arg: boolean) => void;
 }
 
 export default function TradeRoom({ setPopupVisible }: IProps) {
+  const dispatch = useAppDispatch();
   const title = 'Тестовые торги на аппарат ЛОТОС №2033564 (09.11.2020 07:00)';
   const [timerTime, setTimerTime] = useState(timerLength);
   const [currentPlayerIndex, setCurrentPlayer] = useState(0);
-  const { isError, isLoading, data } = useFetch('some url');
+  const { isError, isLoading, data } = useAppSelector((state) => state.tradeRoom);
   const { startTradeTime, participants } = data;
   const minDiscount = 25000;
   const wantedCost = 2475000;
+  useEffect(() => {
+    dispatch(getTradeRoomAsync());
+  }, []);
 
   useEffect(() => {
     function timer() {
