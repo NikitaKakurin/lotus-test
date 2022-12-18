@@ -155,7 +155,7 @@ export default function TradeRoom({ setPopupVisible }: IProps) {
             <BsChatLeftText />
           </div>
         </Button>
-        <Button>
+        <Button onClick={() => dispatch(getTradeRoomAsync())}>
           <div className="flex flex-nowrap items-center justify-between gap-1">
             <span>ОБНОВИТЬ</span>
             <RxUpdate />

@@ -3,7 +3,7 @@ import { ITradeData } from 'models/typescript';
 
 // A mock function to mimic making an async request for data
 export function fetchGetTradeRoom() {
-  // если бы использовался сервер использовался бы экземпляр axios(api):
+  // если бы использовался сервер - использовался экземпляр axios(api):
   // const response = await api.get<ITradeData>(
   //   `url`
   // );
