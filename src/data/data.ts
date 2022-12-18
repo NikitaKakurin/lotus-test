@@ -67,7 +67,7 @@ export const tradeData = {
       paymentTerms: 40,
       cost: 3300000,
       actions: '',
-      id: 5,
+      id: 6,
       isOnline: false,
     },
     {
@@ -78,7 +78,7 @@ export const tradeData = {
       paymentTerms: 40,
       cost: 3300000,
       actions: '',
-      id: 5,
+      id: 7,
       isOnline: false,
     },
   ],
