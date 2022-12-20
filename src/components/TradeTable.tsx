@@ -6,10 +6,13 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { getTradeRoomAsync } from 'app/slices/tradeRoomSlice';
 import Timer from './timer/Timer';
 import { fixTimer } from 'utils/fixTimer';
+import io from 'socket.io-client';
+const socket = io('https://localhost:3000');
 
 export default function TradeTable() {
   const dispatch = useAppDispatch();
   const [timerTime, setTimerTime] = useState(timerLength);
+  const [currentTime, setCurrentTime] = useState(Date.now());
   const [currentPlayerIndex, setCurrentPlayer] = useState(0);
   const { data } = useAppSelector((state) => state.tradeRoom);
   const { startTradeTime, participants, minDiscount, wantedCost } = data;
@@ -19,17 +22,29 @@ export default function TradeTable() {
   }, []);
 
   useEffect(() => {
-    function timer() {
-      const currentTime = Date.now();
-      const diffTimeSS = Math.floor((currentTime - startTradeTime) / 1000);
-      const currentPlayer = Math.floor(diffTimeSS / timerLength) % participants.length;
-      const currentTimerTime = diffTimeSS % timerLength;
-      setTimerTime(currentTimerTime);
-      setCurrentPlayer(currentPlayer);
-    }
-    const interval = setInterval(timer, 1000);
-    return () => clearInterval(interval);
-  }, [startTradeTime, participants]);
+    const diffTimeSS = Math.floor((currentTime - startTradeTime) / 1000);
+    const currentPlayer = Math.floor(diffTimeSS / timerLength) % participants.length;
+    const currentTimerTime = diffTimeSS % timerLength;
+    setTimerTime(currentTimerTime);
+    setCurrentPlayer(currentPlayer);
+  }, [startTradeTime, participants, currentTime]);
+  interface ISocketCurrentTime {
+    currentTime: number;
+  }
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('connect');
+    });
+    socket.on('currentTime', ({ currentTime }: ISocketCurrentTime) => {
+      console.log('currentTime:', currentTime);
+      setCurrentTime(currentTime);
+    });
+
+    return () => {
+      socket.off('connect');
+      socket.off('currentTime');
+    };
+  }, []);
   return (
     <table className="text-center text-sm">
       <tbody className="[&>*:nth-child(odd)]:bg-gray-200/50 [&>*:nth-child(1)]:bg-transparent">
